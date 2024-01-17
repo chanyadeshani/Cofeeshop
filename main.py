@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -36,6 +36,20 @@ def menu():
                 }
 
     return render_template('menu.html', products=products)
+
+
+# Define the route to handle order submission
+@app.route('/submit_order', methods=['POST'])
+def submit_order():
+    # Extract data from the JSON payload
+    data = request.get_json()
+    items = data.get('items')
+    price = data.get('price')
+
+    # Process the order data as needed (e.g., save to a database, send confirmation email, etc.)
+
+    # Return a response (optional)
+    return jsonify({'message': 'Order received successfully'})
 
 
 if __name__ == '__main__':

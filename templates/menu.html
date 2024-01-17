@@ -12,18 +12,18 @@
             <div style="padding: 10px; background-color: {{ bg_color }}; margin: 20px">
                 <p style="font-size: 24px">{{ product }}</p>
                 {% for item in products[product] %}
-                    <p>{{item[0]}} £ {{item[1]}}<button onclick="addToCart('{{ item[0] }}', {{ item[1] }})", style="margin-left: 50px">ADD</button></p>
+                    <p>{{item[0]}} £{{item[1]}}<button onclick="addToCart('{{ item[0] }}', {{ item[1] }})" style="margin-left: 50px">ADD</button></p>
                 {% endfor %}
-
             </div>
         {% endfor %}
     </div>
     <p>Total: £<span id="total">0</span></p>
     <p>Items</p>
-    <p id = "items"></p>
-<button id = 'submit', onclick="order()"> Order</button>
-<script>
-        function addToCart(productName,price) {
+    <p id="items"></p>
+    <button id="submit" onclick="order()">Order</button>
+
+    <script>
+        function addToCart(productName, price) {
             // Get the current total
             let totalElement = document.getElementById("total");
             let currentTotal = parseFloat(totalElement.textContent.replace('£', ''));
@@ -36,9 +36,26 @@
             let items = document.getElementById("items");
             items.textContent = items.textContent + " " + productName;
         }
-        function order(){
-            let items = document.getElementById("items").textContent
-            let price = document.getElementById("total").textContent
+
+        async function order() {
+            let items = document.getElementById("items").textContent;
+            let price = document.getElementById("total").textContent;
+
+            // Send a POST request to the Flask endpoint
+            const response = await fetch('/submit_order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ items: items, price: price })
+            });
+
+            // Handle the response if needed
+            if (response.ok) {
+                console.log('Order submitted successfully!');
+            } else {
+                console.error('Failed to submit order.');
+            }
         }
-</script>
+    </script>
 {% endblock %}
