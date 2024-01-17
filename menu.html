@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Products</h1>
+    <div style="width: 50%; margin: auto">
+        {% for product in products %}
+            {%if loop.index % 2 == 0 %}
+                {% set bg_color = '#eeeeeb' %}
+            {%else%}
+                {% set bg_color = '#eeeebb' %}
+            {% endif %}
+            <div style="padding: 10px; background-color: {{ bg_color }}; margin: 20px">
+                <p style="font-size: 24px">{{ product }}</p>
+                {% for item in products[product] %}
+                    <p>{{item[0]}} £ {{item[1]}}<button onclick="addToCart('{{ item[0] }}', {{ item[1] }})", style="margin-left: 50px">ADD</button></p>
+                {% endfor %}
+
+            </div>
+        {% endfor %}
+    </div>
+    <p>Total: £<span id="total">0</span></p>
+    <p>Items</p>
+    <p id = "items"></p>
+<button id = 'submit', onclick="order()"> Order</button>
+<script>
+        function addToCart(productName,price) {
+            // Get the current total
+            let totalElement = document.getElementById("total");
+            let currentTotal = parseFloat(totalElement.textContent.replace('£', ''));
+
+            // Add the product price to the total
+            let newTotal = currentTotal + price;
+
+            // Update the total element
+            totalElement.textContent = newTotal.toFixed(2);
+            let items = document.getElementById("items");
+            items.textContent = items.textContent + " " + productName;
+        }
+
+</script>
+{% endblock %}
