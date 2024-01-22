@@ -12,7 +12,9 @@
             <div style="padding: 10px; background-color: {{ bg_color }}; margin: 20px">
                 <p style="font-size: 24px">{{ product }}</p>
                 {% for item in products[product] %}
-                    <p>{{item[0]}} £{{item[1]}}<button onclick="addToCart('{{ item[0] }}', {{ item[1] }})" style="margin-left: 50px">ADD</button></p>
+                    <p>{{item[0]}} £{{item[1]}}
+                        <button onclick="addToCart('{{ item[0] }}', {{ item[1] }})"
+                                style="margin-left: 50px">ADD</button></p>
                 {% endfor %}
             </div>
         {% endfor %}
