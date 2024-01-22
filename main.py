@@ -31,7 +31,7 @@ def login():
 
 @app.route('/menu')
 def menu():
-    products = {"Espresso": [["Latte", 3.0], ["Mocha", 4.0], ["Macchiato", 2], ["Cappuccino", 4], ["Americano", 5]],
+    products = {"Espresso": [["Latte", 3.5], ["Mocha", 4.75], ["Macchiato", 2], ["Cappuccino", 4], ["Americano", 5]],
                 "Brewed Coffee": [["Filter coffee", 2], ["Iced Coffee & Cold Brew", 3]]
                 }
 
