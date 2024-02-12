@@ -1,12 +1,16 @@
-{%extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-	<h2>Welcome To Home page</h2>
-	<h4>Flask: Rendering Templates</h4>
-	<form method = "POST" >
-		{{ form.hidden_tag() }}
-		{{ form.name.label}} {{form.name()}}
-		{{form.submit()}}
-	</form>
-    <p> Home text contents</p>
+<br>
+		<form method="post" action="/details">
+			<label for="username">Username</label>
+			<input type="text" name="username" id="username"/>
+			<br/>
+			<br>
+			<label for="password">Password</label>
+			<input type="password" name="password" id="password"/>
+			<br/>
+			<br>
+			<input type="submit" name="submit" id="submit" value="Login"/>
+		</form>
 {% endblock %}
