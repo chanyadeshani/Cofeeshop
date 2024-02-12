@@ -19,6 +19,7 @@ class DatabaseManager:
         except Error as e:
             print(e)
 
+
     def insert_order(self, order):
         insert_sql = "INSERT INTO `order` (items,price) VALUES(?,?)"
         try:
