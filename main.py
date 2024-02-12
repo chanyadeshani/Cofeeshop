@@ -4,11 +4,9 @@ from flask import Flask, render_template, request, jsonify
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, BooleanField, SelectField, \
     SubmitField
-from wtforms.validators import DataRequired, Length, Email, Regexp
-from wtforms import ValidationError
-from flask import Flask, request, make_response, render_template
+from wtforms.validators import DataRequired, Length, Email
 
-from database import DatabaseManager
+import database
 
 
 app = Flask(__name__)
@@ -41,8 +39,7 @@ def submit_order():
     # Process the order data as needed (e.g., save to a database, send confirmation email, etc.)
     order = [items, price]
     print(order[0], order[1])
-    db_manager = DatabaseManager('coffee.db')
-    db_manager.insert_order(order)
+    database.insert_order('coffee.db',order)
 
     # Return a response (optional)
     return jsonify({'message': 'Order received successfully'})
@@ -64,6 +61,5 @@ def index():
 
 
 if __name__ == '__main__':
-    db_manager = DatabaseManager('coffee.db')
-    db_manager.init_database()
+    database.init_database('coffee.db')
     app.run(debug=True)
