@@ -2,9 +2,8 @@ import datetime
 from flask import Flask, render_template, request, jsonify
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, BooleanField, SelectField, \
-    SubmitField
-from wtforms.validators import DataRequired, Length, Email
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 import database
 
@@ -39,7 +38,7 @@ def submit_order():
     # Process the order data as needed (e.g., save to a database, send confirmation email, etc.)
     order = [items, price]
     print(order[0], order[1])
-    database.insert_order('coffee.db',order)
+    database.insert_order('coffee.db', order)
 
     # Return a response (optional)
     return jsonify({'message': 'Order received successfully'})
@@ -50,14 +49,11 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/index', methods=['GET', 'POST'])
-def index():
-    name = None
-    form = NameForm()
-    if form.validate_on_submit():
-        name = form.name.data
-        form.name.data = ''
-    return render_template('home.html', form=form, name=name)
+# A page for restaurant staff to see orders
+@app.route('/orders_list')
+def orders_list():
+    orders = database.list_orders('coffee.db')
+    return render_template('orders_list.html', orders=orders)
 
 
 if __name__ == '__main__':

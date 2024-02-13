@@ -3,10 +3,8 @@
 {% block content %}
 	<h2>Welcome To Home page</h2>
 	<h4>Flask: Rendering Templates</h4>
-	<form method = "POST" >
-		{{ form.hidden_tag() }}
-		{{ form.name.label}} {{form.name()}}
-		{{form.submit()}}
-	</form>
+	<a href="{{ url_for('secondpage') }}">Page 2</a>
+	<a href="{{ url_for('menu') }}">Menu</a>
+
     <p> Home text contents</p>
 {% endblock %}
