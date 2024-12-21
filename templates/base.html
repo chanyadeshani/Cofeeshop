@@ -1,35 +1,35 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head>
-    <title>Coffee Shop</title>
-    <style>
-        .div-1 {
-            height: 300px;
-            width: 100%;
-            background-image: url("/static/banner.png");
-        }
-        h2 {
-            margin: 50px;
-            padding: 0px;
-            font-family: BebasNeue;
-            color: #777878;
-            font-size: 30pt;
-            line-height:60px;
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Flask Basic App</title>
+        <style>
+        nav a {
+            color: #d64161;
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
         }
     </style>
-</head>
-<body>
-<div class="div-1">
-    <h2>
-         <a href="{{ url_for('menu') }}">Menu</a>
+  </head>
+
+  <body>
+    <header>
+      <h1>Flask Basic App</h1>
+    </header>
+    <nav>
+        <a href="{{ url_for('menu') }}">Order Page</a>
         <a href="{{ url_for('login') }}">Login</a>
-    </h2>
-</div>
+        <a href="{{ url_for('register') }}">Register</a>
 
-    {% block content %}
-    {% endblock %}
-
-
-</body>
+    </nav>
+    <hr>
+    <main>
+      <!-- child template -->
+      {% block content %}
+      {% endblock %}
+    </main>
+  </body>
 </html>

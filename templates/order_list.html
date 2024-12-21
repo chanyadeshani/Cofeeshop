@@ -1,0 +1,8 @@
+{%extends "base.html" %}
+
+{% block content %}
+    <H2> This is the employee page for coffee shop</H2>
+    {% for order in orders %}
+        <p>{{order[0]}} £ {{order[1]}}</p>
+    {% endfor %}
+{% endblock %}

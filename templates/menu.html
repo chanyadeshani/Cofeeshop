@@ -26,7 +26,7 @@
         function addToCart(productName,price) {
             // Get the current total
             let totalElement = document.getElementById("total");
-            let currentTotal = parseFloat(totalElement.textContent.replace('£', ''));
+            let currentTotal = parseFloat(totalElement.textContent);
 
             // Add the product price to the total
             let newTotal = currentTotal + price;

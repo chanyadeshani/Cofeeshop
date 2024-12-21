@@ -1,15 +1,11 @@
-import datetime
-from flask import Flask, render_template, request, jsonify
-
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
-import database
-
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'hard to guess string'
+app.config['SECRET_KEY'] = 'Some hard to guess key'
 
 
 class NameForm(FlaskForm):
@@ -18,6 +14,43 @@ class NameForm(FlaskForm):
 
 
 @app.route('/')
+def index():
+    return render_template("home.html") # Add you dashboad here
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        # Print the form data to the console
+        for key, value in request.form.items():
+            print(f'{key}: {value}')
+
+        # Can get name of the user from database here
+        user_name = request.form['user_name']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+
+        return redirect(url_for('login'))
+    else:
+        return render_template("register.html")
+
+
+# login page
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # Print the form data to the console
+        for key, value in request.form.items():
+            print(f'{key}: {value}')
+
+            # Can get name of the user from database here
+        session['user_id'] = request.form['user_id'],
+
+        return redirect(url_for('index'))
+
+    return render_template("login.html")
+
+
 @app.route('/menu')
 def menu():
     products = {"Espresso": [["Latte", 3.5], ["Mocha", 4.75], ["Macchiato", 2], ["Cappuccino", 4], ["Americano", 5]],
@@ -35,27 +68,11 @@ def submit_order():
     items = data.get('items')
     price = data.get('price')
 
-    # Process the order data as needed (e.g., save to a database, send confirmation email, etc.)
-    order = [items, price]
-    print(order[0], order[1])
-    database.insert_order('coffee.db', order)
+    # Process the order data as needed (e.g., save to a database, etc.)
 
     # Return a response (optional)
     return jsonify({'message': 'Order received successfully'})
 
 
-@app.route('/login', methods=['GET'])
-def login():
-    return render_template('login.html')
-
-
-# A page for restaurant staff to see orders
-@app.route('/orders_list')
-def orders_list():
-    orders = database.list_orders('coffee.db')
-    return render_template('orders_list.html', orders=orders)
-
-
 if __name__ == '__main__':
-    database.init_database('coffee.db')
     app.run(debug=True)
